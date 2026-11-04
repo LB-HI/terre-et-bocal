@@ -157,13 +157,21 @@
       <!-- Ce bouton peut servir d'objectif de conversion dans GA4 -->
       <script>
   // Conversions GA4 : clic sur "Commander" et inscription newsletter
-  document.querySelectorAll('.carte .bouton').forEach(function(b){
-    b.addEventListener('click', function(){
-      gtag('event', 'clic_commander', {item_name: b.closest('.carte').querySelector('h3').textContent});
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.carte .bouton').forEach(function(b){
+      b.addEventListener('click', function(){
+        gtag('event', 'clic_commander', {
+          item_name: b.closest('.carte').querySelector('h3').textContent.trim()
+        });
+      });
     });
-  });
-  document.querySelector('#contact form').addEventListener('submit', function(){
-    gtag('event', 'generate_lead', {methode: 'newsletter'});
+
+    var formNewsletter = document.querySelector('#contact form');
+    if (formNewsletter) {
+      formNewsletter.addEventListener('submit', function(){
+        gtag('event', 'generate_lead', {methode: 'newsletter'});
+      });
+    }
   });
 </script>
       
