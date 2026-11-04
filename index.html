@@ -155,6 +155,18 @@
       <h3>Newsletter</h3>
       <p>Recevez nos arrivages et -10 % sur votre première commande.</p>
       <!-- Ce bouton peut servir d'objectif de conversion dans GA4 -->
+      <script>
+  // Conversions GA4 : clic sur "Commander" et inscription newsletter
+  document.querySelectorAll('.carte .bouton').forEach(function(b){
+    b.addEventListener('click', function(){
+      gtag('event', 'purchase', {currency: 'EUR', items: [{item_name: b.closest('.carte').querySelector('h3').textContent}]});
+    });
+  });
+  document.querySelector('#contact form').addEventListener('submit', function(){
+    gtag('event', 'generate_lead', {methode: 'newsletter'});
+  });
+</script>
+      
       <form onsubmit="event.preventDefault();this.innerHTML='<p>Merci, inscription enregistrée !</p>';">
         <input type="email" placeholder="Votre e-mail" required>
         <button class="bouton" type="submit">Je m'inscris</button>
